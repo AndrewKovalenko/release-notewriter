@@ -1,4 +1,4 @@
-use super::dtos::release::Release;
+use crate::application::dtos::release::Release;
 use chrono;
 
 pub struct Repository<'a> {
