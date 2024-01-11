@@ -1,4 +1,4 @@
-use release_notewriter::cmd::notes::generate_notes_since_latest_release;
+use release_notewriter::application::notes::generate_notes_since_latest_release;
 
 const TEST_REPO: &str = "https://github.com/AndrewKovalenko/lotogen";
 

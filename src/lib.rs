@@ -1,4 +1,4 @@
-pub mod cmd {
+pub mod application {
     pub mod notes;
 }
 
