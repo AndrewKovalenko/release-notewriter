@@ -1,8 +1,7 @@
 use crate::application::dtos::release::Release;
 use chrono::{self, DateTime, Utc};
 
-const APP_AUTH_TOKEN: &str = "";
-
+const APP_AUTH_TOKEN: &str = "ghs_2bfqNh2rReCtw5MVfXffTREXTkc7Ka2u8Odn";
 fn parse_url(url: &str) -> (String, String) {
     (String::from("AndrewKovalenko"), String::from("lotogen"))
 }
@@ -28,10 +27,8 @@ impl<'a> Repository<'a> {
         let http_client = reqwest::Client::new();
         let commits = http_client
             .get(get_commits_url)
-            .header(
-                reqwest::header::AUTHORIZATION,
-                format!("Bearer {APP_AUTH_TOKEN}"),
-            )
+            .header("Authorization", APP_AUTH_TOKEN)
+            .header(reqwest::header::USER_AGENT, "Release-Noter")
             .header(reqwest::header::ACCEPT, "application/vnd.github+json")
             .header("X-GitHub-Api-Version", "2022-11-28")
             .send()
