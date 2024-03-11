@@ -1,4 +1,4 @@
-use crate::data_access::github::Repository;
+use crate::repositories::github::Repository;
 
 pub async fn generate_notes_since_latest_release(repository_url: &str) -> Vec<String> {
     let repository = Repository::new(repository_url);
