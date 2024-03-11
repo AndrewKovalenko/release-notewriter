@@ -10,3 +10,9 @@ pub mod repositories {
     pub mod github;
     pub mod system;
 }
+
+pub mod services {
+    pub mod jwt;
+}
+
+pub mod config;
