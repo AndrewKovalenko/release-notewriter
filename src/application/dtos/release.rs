@@ -1,5 +1,8 @@
-use chrono::{DateTime, Utc};
+use serde::Deserialize;
 
+pub type GitHubTimeStamp = String;
+
+#[derive(Deserialize)]
 pub struct Release {
-    pub timestamp: DateTime<Utc>,
+    pub published_at: GitHubTimeStamp,
 }
