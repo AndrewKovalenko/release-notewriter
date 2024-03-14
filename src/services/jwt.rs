@@ -1,6 +1,5 @@
 use std::fs;
 
-use anyhow::bail;
 use chrono::Duration;
 use jsonwebtoken::{encode, Algorithm, EncodingKey, Header};
 use serde::Serialize;
@@ -12,9 +11,6 @@ struct GitHubClaims {
     iat: i64,
     exp: i64,
     iss: String,
-}
-fn read_private_key(file_path: &str) -> anyhow::Result<String> {
-    fs::read_to_string(file_path).or(bail!("unable to read secret form file: {file_path}"))
 }
 
 pub fn generate_github_access_jwt(
@@ -34,12 +30,12 @@ pub fn generate_github_access_jwt(
         iss: String::from(app_id),
     };
 
-    let private_key = read_private_key(private_key_file_path).unwrap();
+    let private_key = fs::read_to_string(private_key_file_path).unwrap();
 
     let jwt_token = encode(
         &jwt_header,
         &claims,
-        &EncodingKey::from_secret(private_key.as_ref()),
+        &EncodingKey::from_rsa_pem(private_key.as_ref()).unwrap(),
     );
 
     jwt_token.unwrap()
@@ -47,13 +43,16 @@ pub fn generate_github_access_jwt(
 
 #[cfg(test)]
 mod tests {
-    use jsonwebtoken::{Algorithm, Header};
+    use super::*;
+    use crate::config::*;
+    use std::env;
 
     #[test]
     fn sandbox() {
-        let jwt_header = Header::new(Algorithm::RS256);
+        let app_id = env::var(GITHUB_APP_ID);
+        let private_secret_path = env::var(GITHUB_PRIVATE_KEY_FILE);
 
-        println!("Type: {}", jwt_header.typ.unwrap());
-        println!("Claims: {}", cla);
+        let jwt_token = generate_github_access_jwt(GITHUB_APP_ID, GITHUB_PRIVATE_KEY_FILE, 600);
+        println!("JWT: {}", jwt_token);
     }
 }
