@@ -1,3 +1,4 @@
+use super::dtos::commit::{Commit, CommitRecord};
 use crate::repositories::github::Repository;
 
 pub async fn generate_notes_since_latest_release(repository_url: &str) -> Vec<String> {
@@ -10,5 +11,11 @@ pub async fn generate_notes_since_latest_release(repository_url: &str) -> Vec<St
     };
 
     let commits = repository.get_commits(last_release_timestamp).await;
-    return vec![commits];
+    let commit_messages = serde_json::from_str::<Vec<CommitRecord>>(&commits)
+        .unwrap()
+        .iter()
+        .map(|record| record.commit.message.clone())
+        .collect::<Vec<String>>();
+
+    return commit_messages;
 }

@@ -2,7 +2,10 @@ pub mod application {
     pub mod notes;
 
     pub mod dtos {
+        pub mod commit;
         pub mod release;
+
+        pub(crate) mod common;
     }
 }
 

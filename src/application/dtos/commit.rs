@@ -1,8 +1,10 @@
-use chrono::{DateTime, Utc};
+use serde::Deserialize;
+
+use super::release::GitHubTimeStamp;
 
 #[derive(Deserialize)]
 pub struct Author {
-    pub date: DateTime<Utc>,
+    pub date: GitHubTimeStamp,
 }
 
 #[derive(Deserialize)]
