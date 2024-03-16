@@ -4,6 +4,7 @@ pub mod application {
     pub mod dtos {
         pub mod commit;
         pub mod release;
+        pub mod repository;
 
         pub mod common;
     }
