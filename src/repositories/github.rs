@@ -1,5 +1,7 @@
 use crate::application::dtos::common::GitHubTimeStamp;
-use crate::application::dtos::{commit::CommitRecord, release::Release};
+use crate::application::dtos::{
+    commit::CommitRecord, release::Release, repository::Repository as GitHubRepositoryInformation,
+};
 
 const APP_AUTH_TOKEN: &str = "ghs_2bfqNh2rReCtw5MVfXffTREXTkc7Ka2u8Odn";
 
@@ -18,14 +20,14 @@ impl Repository {
         Repository { owner, repo_name }
     }
 
-    pub async fn description(&self) -> String {
+    pub async fn description(&self) -> GitHubRepositoryInformation {
         let get_repo_url = format!(
             "https://api.github.com/repos/{}/{}",
             self.owner, self.repo_name
         );
 
         let http_client = reqwest::Client::new();
-        let description = http_client
+        let repo_information_response = http_client
             .get(get_repo_url)
             .header("Authorization", APP_AUTH_TOKEN)
             .header(reqwest::header::USER_AGENT, "Release-Noter")
@@ -38,7 +40,7 @@ impl Repository {
             .await
             .unwrap();
 
-        String::from("")
+        serde_json::from_str(&repo_information_response).unwrap()
     }
 
     pub async fn commits(&self, since: Option<GitHubTimeStamp>) -> Vec<CommitRecord> {

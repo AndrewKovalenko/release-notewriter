@@ -9,12 +9,15 @@ pub async fn generate_notes_since_latest_release(repository_url: &str) -> Vec<St
         None
     };
 
-    let commits = repository
+    let mut commits = repository
         .commits(last_release_timestamp)
         .await
         .iter()
         .map(|record| record.commit.message.clone())
         .collect::<Vec<String>>();
 
-    return commits;
+    let repository_information = repository.description().await;
+
+    commits.push(repository_information.description);
+    commits
 }
