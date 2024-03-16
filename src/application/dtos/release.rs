@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-pub type GitHubTimeStamp = String;
+use super::common::GitHubTimeStamp;
 
 #[derive(Deserialize)]
 pub struct Release {
