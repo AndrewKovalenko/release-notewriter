@@ -1,1 +1,1 @@
-pub type GitHubTimeStamp = String;
+pub(crate) type GitHubTimeStamp = String;

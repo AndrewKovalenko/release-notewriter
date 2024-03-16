@@ -5,7 +5,7 @@ pub mod application {
         pub mod commit;
         pub mod release;
 
-        pub(crate) mod common;
+        pub mod common;
     }
 }
 

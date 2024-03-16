@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-use super::release::GitHubTimeStamp;
+use super::common::GitHubTimeStamp;
 
 #[derive(Deserialize)]
 pub struct Author {
