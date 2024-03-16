@@ -17,6 +17,7 @@ pub mod repositories {
 
 pub mod services {
     pub mod jwt;
+    pub mod release_notes_generator;
 }
 
 pub mod config;
