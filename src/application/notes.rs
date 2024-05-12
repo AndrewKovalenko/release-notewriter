@@ -1,7 +1,21 @@
+use super::dtos::llm_request::{GptMessage, GptRole, LLM_Request, ModelVersion};
 use crate::repositories::github::Repository;
 
-pub fn build_prompts(repository_description: String, commits: Vec<String>) -> Vec<String> {
-    Vec::new()
+pub fn build_llm_request(repository_description: String, commits: Vec<String>) -> LLM_Request {
+    let system_prompt_text = format!(
+        include_str!("../../prompt_templates/system_prompt.tmpl"),
+        repository_description = repository_description
+    );
+
+    let messages = vec![GptMessage {
+        role: GptRole::System,
+        content: system_prompt_text,
+    }];
+
+    LLM_Request {
+        model: ModelVersion::Gpt3_5_Turbo,
+        messages,
+    }
 }
 
 pub async fn generate_notes_since_latest_release(repository_url: &str) -> Vec<String> {
