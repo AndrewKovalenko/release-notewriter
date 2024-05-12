@@ -1,5 +1,9 @@
 use crate::repositories::github::Repository;
 
+pub fn build_prompts(repository_description: String, commits: Vec<String>) -> Vec<String> {
+    Vec::new()
+}
+
 pub async fn generate_notes_since_latest_release(repository_url: &str) -> Vec<String> {
     let repository = Repository::new(repository_url);
     let latest_release = repository.latest_release().await;
