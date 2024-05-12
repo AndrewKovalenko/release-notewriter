@@ -13,6 +13,7 @@ pub mod application {
 
 pub mod repositories {
     pub mod github;
+    pub mod gpt;
     pub mod system;
 }
 
