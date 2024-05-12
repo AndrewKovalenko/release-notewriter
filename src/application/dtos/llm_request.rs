@@ -38,5 +38,5 @@ pub struct GptMessage {
 
 pub struct LLM_Request {
     pub model: ModelVersion,
-    pub message: Vec<GptMessage>,
+    pub messages: Vec<GptMessage>,
 }
