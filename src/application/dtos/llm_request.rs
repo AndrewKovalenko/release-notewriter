@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Serializer};
 use std::fmt;
 
 const GPT_3_5_TURBO_NAME: &str = "gpt-3.5-turbo";
@@ -6,9 +6,18 @@ const SYSTEM_ROLE_NAME: &str = "system";
 const ASSISTANT_ROLE_NAME: &str = "assistant";
 const USER_ROLE_NAME: &str = "user";
 
-#[derive(Serialize)]
 pub enum ModelVersion {
     Gpt3_5Turbo,
+}
+impl Serialize for ModelVersion {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match *self {
+            ModelVersion::Gpt3_5Turbo => serializer.serialize_str(GPT_3_5_TURBO_NAME),
+        }
+    }
 }
 
 impl fmt::Display for ModelVersion {
@@ -20,6 +29,7 @@ impl fmt::Display for ModelVersion {
 }
 
 #[derive(Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum GptRole {
     System,
     Assistant,

@@ -58,5 +58,5 @@ pub async fn generate_notes_since_latest_release(repository_url: &str) -> String
     let llm_request = build_llm_request(repository_information.description, commits);
     let release_notes = gpt::get_release_notes(llm_request).await;
 
-    String::new()
+    release_notes
 }
