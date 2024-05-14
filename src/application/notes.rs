@@ -1,5 +1,5 @@
 use super::dtos::llm_request::{GptMessage, GptRole, LlmRequest, ModelVersion};
-use crate::repositories::github::Repository;
+use crate::repositories::{github::Repository, gpt};
 
 pub fn build_llm_request(repository_description: String, commits: Vec<String>) -> LlmRequest {
     let system_prompt_text = format!(
@@ -56,6 +56,7 @@ pub async fn generate_notes_since_latest_release(repository_url: &str) -> String
     let repository_information = repository.description().await;
 
     let llm_request = build_llm_request(repository_information.description, commits);
+    let release_notes = gpt::get_release_notes(llm_request).await;
 
     String::new()
 }

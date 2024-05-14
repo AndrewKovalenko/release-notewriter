@@ -7,5 +7,5 @@ async fn main() {
     system::load_env_file();
     let release_notes = generate_notes_since_latest_release(TEST_REPO).await;
 
-    release_notes.iter().for_each(|line| println!("{line}"));
+    println!("{release_notes}")
 }
