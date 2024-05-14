@@ -1,4 +1,4 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 
 const GPT_3_5_TURBO_NAME: &str = "gpt-3.5-turbo";
@@ -19,7 +19,7 @@ impl fmt::Display for ModelVersion {
     }
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub enum GptRole {
     System,
     Assistant,
@@ -36,7 +36,7 @@ impl fmt::Display for GptRole {
     }
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct GptMessage {
     pub role: GptRole,
     pub content: String,
