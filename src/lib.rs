@@ -23,4 +23,8 @@ pub mod services {
     pub mod release_notes_generator;
 }
 
+pub mod utils {
+    pub mod argument_parser;
+}
+
 pub mod config;
