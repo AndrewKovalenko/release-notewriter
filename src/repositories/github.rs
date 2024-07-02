@@ -5,18 +5,13 @@ use crate::application::dtos::{
 
 const APP_AUTH_TOKEN: &str = "ghs_2bfqNh2rReCtw5MVfXffTREXTkc7Ka2u8Odn";
 
-fn parse_url(url: &str) -> (String, String) {
-    (String::from("AndrewKovalenko"), String::from("lotogen"))
-}
-
 pub struct Repository {
     owner: String,
     repo_name: String,
 }
 
 impl Repository {
-    pub fn new(url: &str) -> Self {
-        let (owner, repo_name) = parse_url(url);
+    pub fn new(owner: String, repo_name: String) -> Self {
         Repository { owner, repo_name }
     }
 
