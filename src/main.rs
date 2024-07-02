@@ -12,8 +12,7 @@ struct ReleaseNotesResponse {
 }
 
 async fn release_notes(
-    Path(account): Path<String>,
-    Path(repo_name): Path<String>,
+    Path((account, repo_name)): Path<(String, String)>,
 ) -> Json<ReleaseNotesResponse> {
     let release_notes = generate_notes_since_latest_release(account, repo_name).await;
 
@@ -36,7 +35,7 @@ async fn main() {
         (config::SERVER_ADDRESS.to_string(), config::SERVER_PORT)
     };
 
-    let app = Router::new().route("releasenotes", get(release_notes));
+    let app = Router::new().route("/releasenotes/:account/:repo_name", get(release_notes));
     let listener = tokio::net::TcpListener::bind(format!("{server_address}:{server_port}"))
         .await
         .unwrap();
