@@ -1,6 +1,9 @@
+use anyhow::{Ok, Result};
+
 use crate::application::dtos::common::GitHubTimeStamp;
 use crate::application::dtos::{
-    commit::CommitRecord, release::Release, repository::Repository as GitHubRepositoryInformation,
+    commit::CommitRecord, installation::Installation, release::Release,
+    repository::Repository as GitHubRepositoryInformation,
 };
 
 const APP_AUTH_TOKEN: &str = "ghs_2bfqNh2rReCtw5MVfXffTREXTkc7Ka2u8Odn";
@@ -11,6 +14,29 @@ pub struct Repository {
 }
 
 impl Repository {
+    pub async fn get_app_access_token(&self, jwt_token: String) -> Result<String> {
+        let get_installations_url = format!(
+            "https://api.github.com/repos/{}/{}/installation",
+            self.owner, self.repo_name
+        );
+        let http_client = reqwest::Client::new();
+
+        let installation_response = http_client
+            .get(get_installations_url)
+            .header("Authorization:", format!("Bearer {jwt_token}"))
+            .header(reqwest::header::ACCEPT, "application/vnd.github.v3+json")
+            .send()
+            .await
+            .unwrap()
+            .text()
+            .await
+            .unwrap();
+
+        let installation = serde_json::from_str::<Installation>(installation_response.as_str())?;
+
+        Ok(String::from(""))
+    }
+
     pub fn new(owner: String, repo_name: String) -> Self {
         Repository { owner, repo_name }
     }

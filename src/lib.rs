@@ -4,6 +4,7 @@ pub mod application {
     pub mod dtos {
         pub mod commit;
         pub mod gpt_response;
+        pub mod installation;
         pub mod llm_request;
         pub mod release;
         pub mod repository;
