@@ -1,3 +1,4 @@
+use anyhow::{bail, Context, Result};
 use std::fs;
 
 use chrono::Duration;
@@ -14,10 +15,10 @@ struct GitHubClaims {
 }
 
 pub fn generate_github_access_jwt(
-    app_id: &str,
-    private_key_file_path: &str,
+    app_id: String,
+    private_key_file_path: String,
     ttl_sec: i64,
-) -> String {
+) -> Result<String> {
     let jwt_header = Header::new(Algorithm::RS256);
 
     let now = chrono::offset::Local::now();
@@ -27,32 +28,44 @@ pub fn generate_github_access_jwt(
     let claims = GitHubClaims {
         iat: one_minute_ago.timestamp(),
         exp: jwt_expiration_time.timestamp(),
-        iss: String::from(app_id),
+        iss: app_id,
     };
 
-    let private_key = fs::read_to_string(private_key_file_path).unwrap();
+    let private_key = read_private_secret(private_key_file_path.as_str())?;
 
     let jwt_token = encode(
         &jwt_header,
         &claims,
         &EncodingKey::from_rsa_pem(private_key.as_ref()).unwrap(),
-    );
+    )
+    .context("Unable to generate a JWT token based on claims and headers provided");
 
-    jwt_token.unwrap()
+    jwt_token
+}
+
+fn read_private_secret(file_path: &str) -> Result<String> {
+    let secret_reading_result = fs::read_to_string(file_path);
+
+    if secret_reading_result.is_err() {
+        bail!("Unable to read the file at {file_path}")
+    }
+
+    Ok(secret_reading_result.unwrap())
 }
 
 #[cfg(test)]
 mod tests {
+
     use super::*;
     use crate::config::*;
     use std::env;
 
     #[test]
     fn sandbox() {
-        let app_id = env::var(GITHUB_APP_ID);
-        let private_secret_path = env::var(GITHUB_PRIVATE_KEY_FILE);
+        let app_id = env::var(GITHUB_APP_ID).unwrap();
+        let private_secret_path = env::var(GITHUB_PRIVATE_KEY_FILE).unwrap();
 
-        let jwt_token = generate_github_access_jwt(GITHUB_APP_ID, GITHUB_PRIVATE_KEY_FILE, 600);
-        println!("JWT: {}", jwt_token);
+        let jwt_token = generate_github_access_jwt(app_id, private_secret_path, 600);
+        assert!(jwt_token.is_ok());
     }
 }

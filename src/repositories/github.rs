@@ -65,8 +65,7 @@ impl Repository {
             .await
             .unwrap();
 
-        let commits = serde_json::from_str::<Vec<CommitRecord>>(&commits_response).unwrap();
-        return commits;
+        serde_json::from_str::<Vec<CommitRecord>>(&commits_response).unwrap()
     }
 
     pub async fn latest_release(&self) -> Option<Release> {
