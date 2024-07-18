@@ -1,0 +1,48 @@
+{
+  "id": 48324376,
+  "account": {
+    "login": "AndrewKovalenko",
+    "id": 1983017,
+    "node_id": "MDQ6VXNlcjE5ODMwMTc=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/1983017?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/AndrewKovalenko",
+    "html_url": "https://github.com/AndrewKovalenko",
+    "followers_url": "https://api.github.com/users/AndrewKovalenko/followers",
+    "following_url": "https://api.github.com/users/AndrewKovalenko/following{/other_user}",
+    "gists_url": "https://api.github.com/users/AndrewKovalenko/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/AndrewKovalenko/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/AndrewKovalenko/subscriptions",
+    "organizations_url": "https://api.github.com/users/AndrewKovalenko/orgs",
+    "repos_url": "https://api.github.com/users/AndrewKovalenko/repos",
+    "events_url": "https://api.github.com/users/AndrewKovalenko/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/AndrewKovalenko/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "repository_selection": "all",
+  "access_tokens_url": "https://api.github.com/app/installations/48324376/access_tokens",
+  "repositories_url": "https://api.github.com/installation/repositories",
+  "html_url": "https://github.com/settings/installations/48324376",
+  "app_id": 833873,
+  "app_slug": "release-noter",
+  "target_id": 1983017,
+  "target_type": "User",
+  "permissions": {
+    "contents": "write",
+    "metadata": "read",
+    "statuses": "read"
+  },
+  "events": [
+
+  ],
+  "created_at": "2024-03-11T19:09:11.000Z",
+  "updated_at": "2024-06-11T05:56:40.000Z",
+  "single_file_name": null,
+  "has_multiple_single_files": false,
+  "single_file_paths": [
+
+  ],
+  "suspended_by": null,
+  "suspended_at": null
+}
