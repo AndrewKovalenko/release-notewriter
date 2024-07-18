@@ -38,7 +38,7 @@ pub fn build_llm_request(repository_description: String, commits: Vec<String>) -
 }
 
 pub async fn generate_notes_since_latest_release(account: String, repo_name: String) -> String {
-    let repository = Repository::new(account, repo_name);
+    let repository = Repository::new(account, repo_name).await;
     let latest_release = repository.latest_release().await;
     let last_release_timestamp = if let Some(last_release) = latest_release {
         Some(last_release.published_at)

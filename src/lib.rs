@@ -2,6 +2,7 @@ pub mod application {
     pub mod notes;
 
     pub mod dtos {
+        pub mod access_token;
         pub mod commit;
         pub mod gpt_response;
         pub mod installation;
