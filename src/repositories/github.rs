@@ -158,3 +158,24 @@ impl Repository {
         None
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::repositories::system::get_env_value;
+
+    use super::*;
+
+    #[tokio::test]
+    async fn test_get_app_access_token() {
+        let app_id = get_env_value(GITHUB_APP_ID).unwrap();
+        let private_secret_path = get_env_value(GITHUB_PRIVATE_KEY_FILE).unwrap();
+
+        let jwt_token = generate_github_access_jwt(app_id, private_secret_path, GITHUB_JWT_TTL);
+        assert!(jwt_token.is_ok());
+
+        let token =
+            get_app_access_token("AndrewKovalenko", "lotogen", jwt_token.unwrap().as_str()).await;
+
+        assert!(token.is_ok());
+    }
+}

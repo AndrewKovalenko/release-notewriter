@@ -57,13 +57,13 @@ fn read_private_secret(file_path: &str) -> Result<String> {
 mod tests {
 
     use super::*;
-    use crate::config::*;
-    use std::env;
+    use crate::config::{GITHUB_APP_ID, GITHUB_PRIVATE_KEY_FILE};
+    use crate::repositories::system::get_env_value;
 
     #[test]
     fn sandbox() {
-        let app_id = env::var(GITHUB_APP_ID).unwrap();
-        let private_secret_path = env::var(GITHUB_PRIVATE_KEY_FILE).unwrap();
+        let app_id = get_env_value(GITHUB_APP_ID).unwrap();
+        let private_secret_path = get_env_value(GITHUB_PRIVATE_KEY_FILE).unwrap();
 
         let jwt_token = generate_github_access_jwt(app_id, private_secret_path, 600);
         assert!(jwt_token.is_ok());

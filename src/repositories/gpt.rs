@@ -1,10 +1,11 @@
 use super::system::get_env_value;
 use crate::application::dtos::{gpt_response::GptResponse, llm_request::LlmRequest};
+use crate::config::GPT_ACCESS_TOKEN;
 
 const GPT_COMPLETIONS_URL: &str = "https://api.openai.com/v1/chat/completions";
 
 pub async fn get_release_notes(model_request: LlmRequest) -> String {
-    let gpt_access_token = get_env_value("GPT_ACCESS_TOKEN").unwrap();
+    let gpt_access_token = get_env_value(GPT_ACCESS_TOKEN).unwrap();
     let request_body = serde_json::to_string(&model_request).unwrap();
 
     let http_client = reqwest::Client::new();
